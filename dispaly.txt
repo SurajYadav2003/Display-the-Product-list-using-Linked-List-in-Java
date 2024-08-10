@@ -1,0 +1,116 @@
+import java.util.*;
+
+
+class Product {
+    int productId;
+    String name;
+    double price;
+    int rating;
+
+    
+    public Product(int productId, String name, double price, int rating) {
+        this.productId = productId;
+        this.name = name;
+        this.price = price;
+        this.rating = rating;
+    }
+
+    
+    public int getProductId() {
+        return productId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    @Override
+    public String toString() {
+        return productId + " " + name + " " + price + " " + rating;
+    }
+}
+
+class SortById implements Comparator<Product> {
+    @Override
+    public int compare(Product p1, Product p2) {
+        return Integer.compare(p1.getProductId(), p2.getProductId());
+    }
+}
+
+
+class SortByName implements Comparator<Product> {
+    @Override
+    public int compare(Product p1, Product p2) {
+        return p1.getName().compareTo(p2.getName());
+    }
+}
+
+
+class SortByRating implements Comparator<Product> {
+    @Override
+    public int compare(Product p1, Product p2) {
+        return Integer.compare(p2.getRating(), p1.getRating());
+    }
+}
+
+
+public class Program {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        LinkedList<Product> productList = new LinkedList<>();
+        
+        
+        int n = sc.nextInt();
+        sc.nextLine(); 
+        
+        for (int i = 0; i < n; i++) {
+            
+            int productId = sc.nextInt();
+            sc.nextLine(); 
+            String name = sc.nextLine();
+            double price = sc.nextDouble();
+            int rating = sc.nextInt();
+            sc.nextLine(); 
+
+            productList.add(new Product(productId, name, price, rating));
+        }
+
+        
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                Collections.sort(productList, new SortById());
+                System.out.println("Sort by Product_id :");
+                break;
+            case 2:
+                Collections.sort(productList, new SortByRating());
+                System.out.println("Sort by rating in descending order:");
+                break;
+            case 3:
+                Collections.sort(productList, new SortByName());
+                System.out.println("Sort by Name:");
+                break;
+            default:
+                System.out.println("Invalid choice");
+                sc.close();
+                return;
+        }
+
+        
+        Iterator<Product> iterator = productList.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+        
+        sc.close();
+    }
+}
